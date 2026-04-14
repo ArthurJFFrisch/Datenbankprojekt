@@ -21,3 +21,13 @@ AskUs ist eine Handy App, bei der man mit seinen Freunden Umfragen bezogen auf d
 - Hauptfokus kann schnell von Datenbanken wegrücken: Wenn wir gute Ende zu Ende Verschlüsselung und solche Features einbauen kann er kritisieren, dass der Fokus nicht auf Datenbanken lag
 <hr>
 
+## 🎮Eigenes Spiel
+Ein kleines Spiel, bei dem alle Daten der Spieler und der Objekte im Spiel in Datenbanken gespeichert werden. Ich denke man sollte aber das Spielprinzip simpel halten um nicht vorgeworfen zu kriegen, dass der Fokus nicht mehr auf Datenbanken liegt.
+### ✅Vorteile
+- Es gibt zahllose Objekte und Beziehungen und die Datenbanken würden auf jeden Fall groß genug sein
+- Auch hier ist wieder Account Management möglich
+- Viel Kreativität
+### ❌Nachteile
+- Ein Spiel kann schnell sehr groß werden
+<hr>
+
