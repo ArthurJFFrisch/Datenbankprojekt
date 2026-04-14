@@ -41,3 +41,14 @@ Hattet ihr schonmal diesen Moment, wo ihr euch mit einer wildfremden Person unte
 - Simple Datenbanken: Die Datenbanken könnten zwar sehr groß, aber recht simpel werden. Durch das immergleiche Konzept von Person - Beziehung - Person könnte man die geringe Komplexität der Datenbank kritisieren.
 <hr>
 
+## 👾Pixelart Market
+Pixelart ist die Kunst, ein Bild in einem kleinen Raster aus Quadraten (Pixeln). Die Begrenztheit dieses Stils hat für eine große Community einen Reiz. Man könnte eine Seite schreiben, bei der man eigene kleine Pixelart Bilder erstellen kann und diese auf einem Pixelart Marktplatz versteigern kann.
+### ✅Vorteile
+- Vielfältige Datenbanken: Man kann Geldmengen, Beziehungen zwischen Personen und Bilder selbst in die Datenbanken einpflegen
+- Accountmanagement: Ihr könnt es euch schon denken...
+### ❌Nachteile
+- Einfachheit: Das Projekt könnte zu simpel sein
+- Design: Man könnte kritisieren, dass es zu designfokussiert wird und die Datenbanken in den Hintergrund rücken
+<hr>
+
+
