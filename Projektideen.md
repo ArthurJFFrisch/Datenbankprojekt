@@ -51,4 +51,12 @@ Pixelart ist die Kunst, ein Bild in einem kleinen Raster aus Quadraten (Pixeln).
 - Design: Man könnte kritisieren, dass es zu designfokussiert wird und die Datenbanken in den Hintergrund rücken
 <hr>
 
-
+## 👑Datenbank Spiel
+Mir ist leider noch kein guter Name eingefallen aber ich nenne es jetzt einfach mal Datenbanken Spiel. Es ist ein Spiel, welches mit mehreren Spielern gleichzeitig online gespielt wird. Alle Spieler greifen auf die gleichen Datenbanken zu und haben Aufträge, was sie in der Datenbank erreichen müssen. Dabei bekommt jeder andere Aufträge. Man kann SQL Code schreiben um seine Ziele zu erreichen. Natürlich versuchen die anderen einen daran zu hindern. Jeder SQL befehl hat dabei einen Kostenfaktor. Zum Beispiel ist es sehr teuer wenn man einen Befehl ausführen möchte, der die gesamte Datenbank einfach löscht (sonst würde es schnell eskalieren). Man bekommt pro Zeiteinheit ein wenig Geld um neue Befehle zu schreiben.
+### ✅Vorteile
+- Fokus auf Datenbanken: Also einerseits für die Accounts der Spieler und andererseits für die Datenbanken, an denen gespielt wird.
+- Alleinstellungsmerkmal: Hat wahrscheinlich auch kein anderes Team
+- Online: Da das Spiel online stattfinden würde, könnten wir zeigen was wir bezüglich dieser Mechanik drauf haben
+### ❌Nachteile
+- Schwierigkeit: Es ist auf jeden Fall eine Challenge (immerhin kann man nicht kritisieren, dass es zu simpel ist)
+<hr>
