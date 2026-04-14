@@ -11,7 +11,7 @@ AskUs ist eine Handy App, bei der man mit seinen Freunden Umfragen bezogen auf d
 - Wenige Entitäten: Wir hätten nicht sehr viele Entitäten und das Projekt könnte als zu einfach betrachtet werden
 <hr>
 
-## ❓Chat Portal
+## 💬Chat Portal
 Ähnlich wie Whatsapp oder Facebook. Man kann verschiedenen Nutzern schreiben, Status einstellen, Gruppen erstellen, Nutzer hinzufügen, löschen usw...
 ### ✅Vorteile
 - Account Management: Auch hier kann man wieder Account Management betreiben. Vor allem bei Gruppen können Admins nützlich sein
@@ -24,10 +24,20 @@ AskUs ist eine Handy App, bei der man mit seinen Freunden Umfragen bezogen auf d
 ## 🎮Eigenes Spiel
 Ein kleines Spiel, bei dem alle Daten der Spieler und der Objekte im Spiel in Datenbanken gespeichert werden. Ich denke man sollte aber das Spielprinzip simpel halten um nicht vorgeworfen zu kriegen, dass der Fokus nicht mehr auf Datenbanken liegt.
 ### ✅Vorteile
-- Es gibt zahllose Objekte und Beziehungen und die Datenbanken würden auf jeden Fall groß genug sein
-- Auch hier ist wieder Account Management möglich
+- Vielfältige Datenbanken: Es gibt zahllose Objekte und Beziehungen und die Datenbanken würden auf jeden Fall groß genug sein
+- Accountmanagement: Auch hier ist wieder Account Management möglich
 - Viel Kreativität
 ### ❌Nachteile
 - Ein Spiel kann schnell sehr groß werden
+<hr>
+
+## 🌍Kleine Welt Phänomen
+Hattet ihr schonmal diesen Moment, wo ihr euch mit einer wildfremden Person unterhalten habt und dann festgestellt habt, dass ihr einen gemeinsamen Bekannten habt? Dieses Phänomen ist unter dem Namen "small-world network" bekannt. Wir könnten eine Seite schreiben, bei der man eingeben kann, wen man alles kennt und in welchen Beziehungen man zu den Menschen steht. Sobald man seine Beziehungen eingetragen hat, könnte man das gesamte Netzwerk betrachten und interessante Fakten über die Netzwerke der Menschen erkennen.
+### ✅Vorteile
+- Theoretisches Konzept: Echtes Konzept aus Mathematik/Informatik wird aufgegriffen
+- Alleinstellungsmerkmal: Es ist etwas was sicher keine andere Gruppe macht
+- Accountmanagement: Wär hätte es gedacht, auch hier ist wieder Accounmanagement möglich
+### ❌Nachteile
+- Simple Datenbanken: Die Datenbanken könnten zwar sehr groß, aber recht simpel werden. Durch das immergleiche Konzept von Person - Beziehung - Person könnte man die geringe Komplexität der Datenbank kritisieren.
 <hr>
 
