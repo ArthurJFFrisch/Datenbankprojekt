@@ -1,5 +1,7 @@
 <?php
 
+// Error 500 ist wenn unser Server generell ein Problem hat. Wenn die Datenbank nicht erreichbar ist, ist es eher ein 503, da es ein temporäres Problem sein könnte (z.B. Wartungsarbeiten).
+
 // Baut eine Verbindung zur Datenbank auf
 function connect_to_database(){
     $host = '127.0.0.1';
@@ -34,6 +36,26 @@ function create_database($connection){
     }
 }
 
+function create_user_table($connection) {
+    $dbname = 'datenbankprojekt';
+    $tableName = 'user';
+
+    // SQL-Befehl zur Erstellung der Relation "user", falls sie noch nicht existiert
+    $sql = "CREATE TABLE IF NOT EXISTS `$dbname`.`$tableName` (
+        `username` VARCHAR(32) NOT NULL, 
+        `displayname` VARCHAR(64) NOT NULL, 
+        `password` VARCHAR(255) NOT NULL, 
+        PRIMARY KEY (`username`)
+    ) ENGINE = InnoDB;";
+
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
 // Falls die Datenbank nicht existiert, wird sie erstellt.
 function setup_database() {
     $connection = connect_to_database();
@@ -46,12 +68,20 @@ function setup_database() {
             $connection->close();
             return 500;
         } else {
-            echo 'Database created successfully';
+            echo 'Database created successfully'; // Temporär
             $connection->close();
             return $connection;
         }
     } else {
-        echo 'Database already exists';
+        echo 'Database already exists'; // Temporär
+
+        // Nun können alle Relationen auf ihre Existenz geprüft und bei Bedarf erstellt werden
+        $result = create_user_table($connection);
+        if ($result instanceof Throwable) {
+            error_log("Error while creating table: " . $result->getMessage());
+            $connection->close();
+            return 503;
+        }
         $connection->close();
         return $connection;
     }
