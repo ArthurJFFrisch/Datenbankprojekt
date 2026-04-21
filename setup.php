@@ -2,12 +2,25 @@
 
 // Error 500 ist wenn unser Server generell ein Problem hat. Wenn die Datenbank nicht erreichbar ist, ist es eher ein 503, da es ein temporäres Problem sein könnte (z.B. Wartungsarbeiten).
 
+function connect_to_db_server() {
+    $host = '127.0.0.1';
+    $user = 'fraguns';
+    $pass = 'TrQ@%O0q5Ib*G!';
+
+    try {
+        $connection = new mysqli($host, $user, $pass);
+        return $connection;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
 // Baut eine Verbindung zur Datenbank auf
 function connect_to_database() {
     $host = '127.0.0.1';
-    $user = 'root';
-    $name = 'datenbankprojekt';
-    $pass = '';
+    $user = 'fraguns';
+    $name = 'fraguns_datenbankprojekt';
+    $pass = 'TrQ@%O0q5Ib*G!';
 
     try {
         $connection = new mysqli($host, $user, $pass, $name);
@@ -19,7 +32,7 @@ function connect_to_database() {
 
 // Prüft ob die Datenbank bereits existiert
 function check_for_existing_database($connection){
-    $dbname = 'datenbankprojekt';
+    $dbname = 'fraguns_datenbankprojekt';
     $result = $connection->query("SHOW DATABASES LIKE '$dbname'");
     if ($result->num_rows > 0) {
         return 0;
@@ -30,7 +43,7 @@ function check_for_existing_database($connection){
 
 // Erstellt die Datenbank
 function create_database($connection){
-    $dbname = 'datenbankprojekt';
+    $dbname = 'fraguns_datenbankprojekt';
     if ($connection->query("CREATE DATABASE $dbname") === TRUE) {
         return 0;
     } else {
@@ -39,7 +52,7 @@ function create_database($connection){
 }
 
 function create_user_table($connection) {
-    $dbname = 'datenbankprojekt';
+    $dbname = 'fraguns_datenbankprojekt';
     $tableName = 'user';
 
     // SQL-Befehl zur Erstellung der Relation "user", falls sie noch nicht existiert
@@ -61,11 +74,12 @@ function create_user_table($connection) {
 
 // Falls die Datenbank nicht existiert, wird sie erstellt.
 function setup_database() {
-    $connection = connect_to_database();
+    $connection = connect_to_db_server();
     if ($connection instanceof Throwable) {
         error_log($connection);
         return 503;
-    } elseif (check_for_existing_database($connection) === -1) {
+    }
+    if (check_for_existing_database($connection) === -1) {
         if (create_database($connection) === -1) {
             error_log('Failed to create database');
             $connection->close();
@@ -89,5 +103,3 @@ function setup_database() {
         return $connection;
     }
 }
-
-?>
