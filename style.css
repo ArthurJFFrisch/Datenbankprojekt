@@ -1,0 +1,78 @@
+body {
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #b7b7b7;
+    font-family: "Varela Round", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.card {
+    width: 100%;
+    background-color: #ffffff36;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    min-height: 50px;
+    max-width: 400px;
+}
+
+nav {
+    width: 100%;
+    background-color: #ffffff36;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    min-height: 50px;
+    max-width: 400px;
+}
+
+.option {
+    width: 100%;
+    background-color: #ffffff36;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.smalloption {
+    width: 50%;
+    background-color: #ffffff36;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px 0;
+    min-height: 20px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #ffffff5c;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 100%;
+    object-fit: fill;
+}
+
+input {
+    width: 100%;
+    display: block;
+    background-color: #ffffff36;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    margin: 10px 0;
+    min-height: 30px;
+    cursor: pointer;
+    text-align: center;
+}
