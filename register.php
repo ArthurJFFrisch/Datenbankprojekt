@@ -9,6 +9,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     </head>
     <body>
         <header><h1>FragUns</h1></header>
@@ -17,9 +18,13 @@
             <form method="post">
                 <input id="username" name="username" placeholder="Benutzername">
                 <span id="username-status" style="color: red;"></span>
-                <input name="placeholder" placeholder="Anzeigename">
-                <input name="email" placeholder="E-Mail" type="email">
-                <input name="password" placeholder="Passwort", type="password">
+                <input name="display_name" placeholder="Anzeigename">
+                <input id="email"name="email" placeholder="E-Mail" type="email">
+                <span id="email-status" style="color: red;"></span>
+                <input id="password" name="password" placeholder="Passwort" type="password">
+                <span id="password-status" style="color: red;"></span>
+                <!-- Todo: Prüflogik in php einbauen -->
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAADAsYxWSwYU4ejyd"></div>
                 <button class="option" type="submit"><p>Registrieren</p></button>
             </form>
         </div>
@@ -35,48 +40,59 @@
             // Testen von Verfügbarkeit des Benutzernamens und angemessener Sicherheit des Passworts
             const usernameInput = document.getElementById('username');
             const statusDisplay = document.getElementById('username-status');
+            const passwordInput = document.getElementById('password');
+            const statusPassword = document.getElementById('password-status');
 
-            usernameInput.addEventListener('input', function() {
-                const username = this.value;
-
-                if (username.length < 3) {
-                    statusDisplay.textContent = "";
-                    return;
+            // Passwortsicherheit
+            passwordInput.addEventListener('input', function() {
+                if (this.value.length > 0 && this.value.length < 8) { // Mindestlänge von 8 Zeichen
+                    statusPassword.textContent = "Mindestens 8 Zeichen erforderlich.";
+                } else if (this.value.length > 0 && /\d/.test(this.value) === false) { // Mindestens eine Zahl
+                    statusPassword.textContent = "Mindestens eine Zahl erforderlich.";
+                } else if (this.value.length > 0 && /[A-Z]/.test(this.value) === false) { // Mindestens ein Großbuchstabe
+                    statusPassword.textContent = "Mindestens ein Großbuchstabe erforderlich.";
+                } else if (this.value.length > 0 && /[!@#$%^&*(),.?":{}|<>]/.test(this.value) === false) { // Mindestens ein Sonderzeichen
+                    statusPassword.textContent = "Mindestens ein Sonderzeichen erforderlich.";
+                }else {
+                    statusPassword.textContent = "";
                 }
-
-                // Anfrage an den Server schicken
-                const formData = new FormData();
-                formData.append('username', username);
-
-                fetch('check-username.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-                    if (data === "taken") {
-                        console.log("Username ist bereits vergeben.");
-                        statusDisplay.textContent = "Dieser Name ist bereits vergeben.";
-                    } else if (data === "available") {
-                        statusDisplay.textContent = "";
-                    } else {
-                        // Todo: Fehlerbehandlung
-                    }
-                })
-                .catch(error => console.error('Fehler:', error));
             });
+
+            // Verfügbarkeit des Benutzernamens
+            usernameInput.addEventListener('input', function() {
+            const username = this.value;
+
+            if (username.length === 0) {
+                statusDisplay.textContent = "";
+                return;
+            } else if (username.length < 3) {
+                statusDisplay.textContent = "Mindestens 3 Zeichen erforderlich.";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('username', username);
+
+            // Anfrage an check-username.php senden, um die Verfügbarkeit zu überprüfen
+            fetch('check-username.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.trim() === "taken") {
+                    statusDisplay.textContent = "Bereits vergeben.";
+                } else {
+                    statusDisplay.textContent = "";
+                }
+            })
+            .catch(error => console.error('Fehler:', error));
+        });
         </script>
     </body>
 </html>
 
 <?php
-function test_username_availability($db, $username) {
-    $sql = $db->prepare("SELECT username FROM user WHERE username = ?");
-    $sql->bind_param("s", $username);
-    $sql->execute();
-    $result = $sql->get_result();
-    return ($result->num_rows > 0) ? false : true;
-}
 
 // require ist hier wichtig, weil die App ohne den Zugriff auf Datenbanken nicht funktioniert und setup.php sicherstellt, dass diese korrekt existieren.
 require_once __DIR__ . '/setup.php';
@@ -97,9 +113,9 @@ if ($db instanceof Throwable) {
     http_response_code(500);
     exit();
 } else {
-    $sql = $db->prepare("INSERT INTO user (username, displayname, password) VALUES (?, ?, ?)");
+    $sql = $db->prepare("INSERT INTO user (username, displayname, password, email) VALUES (?, ?, ?, ?)");
     $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $sql->bind_param("sss", $_POST['username'], $_POST['placeholder'], $hashed_password);
+    $sql->bind_param("ssss", $_POST['username'], $_POST['display_name'], $hashed_password, $_POST['email']);
     $sql->execute();
     $sql->get_result();
 }
