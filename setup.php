@@ -3,12 +3,14 @@
 // Error 500 ist wenn unser Server generell ein Problem hat. Wenn die Datenbank nicht erreichbar ist, ist es eher ein 503, da es ein temporäres Problem sein könnte (z.B. Wartungsarbeiten).
 
 // Baut eine Verbindung zur Datenbank auf
-function connect_to_database(){
+function connect_to_database() {
     $host = '127.0.0.1';
     $user = 'root';
+    $name = 'datenbankprojekt';
     $pass = '';
+
     try {
-        $connection = new mysqli($host, $user, $pass);
+        $connection = new mysqli($host, $user, $pass, $name);
         return $connection;
     } catch (mysqli_sql_exception $e) {
         return $e;
@@ -43,8 +45,9 @@ function create_user_table($connection) {
     // SQL-Befehl zur Erstellung der Relation "user", falls sie noch nicht existiert
     $sql = "CREATE TABLE IF NOT EXISTS `$dbname`.`$tableName` (
         `username` VARCHAR(32) NOT NULL, 
-        `displayname` VARCHAR(64) NOT NULL, 
+        `displayname` VARCHAR(10) NOT NULL, 
         `password` VARCHAR(255) NOT NULL, 
+        `email` VARCHAR(32) NOT NULL,
         PRIMARY KEY (`username`)
     ) ENGINE = InnoDB;";
 
