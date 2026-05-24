@@ -3,50 +3,36 @@
 require_once __DIR__ . '/setup.php';
 require __DIR__ . '/login_tokens.php';
 
-
-if (isset($_COOKIE['login_token'])) {
+session_start();
+if (!isset($_SESSION['username']) && isset($_COOKIE['login_token'])) {
     $login_token = $_COOKIE['login_token'];
     $username = check_login_token($login_token);
-    
-} else {
+    $_SESSION["username"] = $username;
+} else if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (strlen($_POST["username"]) >= 3) {
+    if (isset($_POST['DELETE'])) {
+        echo("LÖSCHEN");
         $db = connect_to_database();
         if ($db instanceof Throwable) {
             http_response_code(500);
             exit();
         } else {
-            $sql = $db->prepare("SELECT password FROM user WHERE username=?");
-            $sql->bind_param("s", $_POST['username']);
+            echo ("LÖSCHEN");
+            echo ($_SESSION['username']);
+            $sql = $db->prepare("DELETE FROM user WHERE username=?");
+            $sql->bind_param("s", $_SESSION['username']);
             $sql->execute();
-            $result = $sql->get_result();
-            $row = $result->fetch_assoc();
-            if (password_verify($_POST['password'], (string)$row["password"])){
-                $token = generate_login_token($_POST['username']);
-                if ($token) {
-                    echo ("<script>
-                        const formData = new FormData();
-                        formData.append('login_token', '" . $token . "');
-
-                        fetch('set_login_token_cookie.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .catch(error => console.error('Fehler:', error));
-                    </script>");
-                } else {
-                    echo "<script>alert('Fehler beim Generieren des Login-Tokens.')</script>";
-                }
-            } else {
-                echo "<script>alert('Benutzername oder Passwort ist falsch.')</script>";
-            }
+            $sql = $db->prepare("DELETE FROM login_tokens WHERE username=?");
+            $sql->bind_param("s", $_SESSION['username']);
+            $sql->execute();
+            session_destroy();
+            header("Location: login.php");
+            exit;
         }
-    } else {
-        echo "<script>alert('Bitte überprüfen Sie die eingegebenen Daten.')</script>";
     }
 }
 
@@ -76,56 +62,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <main>
             <div class="card">
                 <h1>Profil</h1>
-                <img src="https://api.dicebear.com/9.x/notionists/svg?seed=<?= $username ?>" alt="Profilbild">
-                <p>Benutzername: <?php echo $username;?></p>
+                <img src="https://api.dicebear.com/9.x/notionists/svg?seed=<?php echo $_SESSION['username']; ?>" alt="Profilbild">
+                <p>Benutzername: <?php echo $_SESSION['username'];?></p>
+                <p>Anzeigename: <?php echo $_SESSION['displayname'];?></p>
+                <form method="POST">
+                    <input type="hidden" name="DELETE">
+                    <button class="option" onclick="return confirm('Möchten Sie Ihren Account wirklich löschen?');" style="background-color:#e86e46; color:white;">Account löschen</button>
+                </form>
             </div>
         </main>
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="choose_question.php">Fragen</a>
+        </nav>
         <footer>
             <a href="impressum.html">Impressum</a>
         </footer>
-        <script>
-            // Testen von Verfügbarkeit des Benutzernamens und angemessener Sicherheit des Passworts
-            const formInput = document.getElementById('form');
-            const usernameInput = document.getElementById('username');
-            const statusDisplay = document.getElementById('username-status');
-            const passwordInput = document.getElementById('password');
-            const statusPassword = document.getElementById('password-status');
-            
-            formInput.addEventListener('submit', function(event) {
-                event.preventDefault();
-                console.log(passwordInput)
-
-                everythingValid = true;
-
-                // Prüflogik Client
-                if (usernameInput.value.length === 0) { // Benutzername fehlt
-                    statusPassword.textContent = "Bitte geben Sie einen Benutzernamen ein."
-                    everythingValid = false
-                } else {
-                    const formData = new FormData();
-                    formData.append('username', username);
-
-                    // Anfrage an check-username.php senden, um die Verfügbarkeit zu überprüfen
-                    fetch('check-username.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        if (data.trim() === "taken") {
-                            statusDisplay.textContent = "";
-                        } else {
-                            statusDisplay.textContent = "Der Benutzername ist falsch.";
-                            everythingValid = false
-                        }
-                    })
-                    .catch(error => console.error('Fehler:', error));
-                }
-
-                if (everythingValid === true) {
-                    formInput.submit();
-                }
-            });
-        </script>
     </body>
 </html>

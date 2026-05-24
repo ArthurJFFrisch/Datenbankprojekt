@@ -1,0 +1,30 @@
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#FF4F7A"/>
+
+  <!-- Left gills -->
+  <rect x="120" y="340" width="220" height="56" rx="28" transform="rotate(-35 120 340)" fill="#B8FFD8"/>
+  <rect x="70" y="500" width="240" height="56" rx="28" fill="#B8FFD8"/>
+  <rect x="120" y="628" width="220" height="56" rx="28" transform="rotate(35 120 628)" fill="#B8FFD8"/>
+
+  <!-- Right gills -->
+  <rect x="684" y="468" width="220" height="56" rx="28" transform="rotate(35 684 468)" fill="#B8FFD8"/>
+  <rect x="714" y="500" width="240" height="56" rx="28" fill="#B8FFD8"/>
+  <rect x="684" y="704" width="220" height="56" rx="28" transform="rotate(-35 684 704)" fill="#B8FFD8"/>
+
+  <!-- Head -->
+  <ellipse cx="512" cy="560" rx="340" ry="250" fill="#B8FFD8"/>
+
+  <!-- Eyes -->
+  <circle cx="390" cy="530" r="42" fill="#FF4F7A"/>
+  <circle cx="634" cy="530" r="42" fill="#FF4F7A"/>
+
+  <!-- Smile -->
+  <path d="M410 650 Q512 735 614 650"
+        stroke="#FF4F7A"
+        stroke-width="28"
+        stroke-linecap="round"
+        fill="none"/>
+</svg>
+```

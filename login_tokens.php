@@ -14,7 +14,7 @@ function generate_login_token($username) {
         if ($sql->affected_rows > 0) {
             return $token; // Rückgabe des generierten Tokens
         } else {
-            return null; // Fehler bei der Token-Erstellung
+            return -1; // Fehler bei der Token-Erstellung
         }
     }
 }
@@ -32,7 +32,7 @@ function check_login_token($token) {
         if ($result->num_rows > 0) {
             return $result->fetch_assoc()['username']; // Benutzername wird zurückgegeben, wenn das Token gülzig ist
         } else {
-            return null; // Ungültiges Token
+            return -1; // Ungültiges Token
         }
     }
 }

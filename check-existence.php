@@ -12,9 +12,9 @@ if (isset($_POST['username'])) {
 
     // Wenn mehr als 0 Zeilen gefunden wurden, ist der Name vergeben
     if ($stmt->num_rows > 0) {
-        echo "taken";
+        echo "exists";
     } else {
-        echo "available";
+        echo "nexists";
     }
     $stmt->close();
     $db->close();

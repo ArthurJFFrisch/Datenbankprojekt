@@ -19,4 +19,3 @@ if (isset($_POST['username'])) {
     $stmt->close();
     $db->close();
 }
-?>

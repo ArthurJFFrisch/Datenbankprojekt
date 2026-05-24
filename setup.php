@@ -66,6 +66,37 @@ function create_token_table($connection) {
     }
 }
 
+function create_group_table($connection) {
+
+    $dbname = 'fraguns_datenbankprojekt';
+    $tableName = 'group_admin';
+
+    // SQL-Befehl zur Erstellung der Relation "user", falls sie noch nicht existiert
+    $sql = "CREATE TABLE IF NOT EXISTS `fraguns_datenbankprojekt`. $tableName (`group_id` INT(20) NOT NULL AUTO_INCREMENT, `admin_username` VARCHAR(20) NOT NULL , `group_name` VARCHAR(20) NOT NULL , PRIMARY KEY (`group_id`)) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+
+function create_groupmember_table($connection) {
+
+    $dbname = 'fraguns_datenbankprojekt';
+    $tableName = 'group_users';
+
+    // SQL-Befehl zur Erstellung der Relation "user", falls sie noch nicht existiert
+    $sql = "CREATE TABLE IF NOT EXISTS `fraguns_datenbankprojekt`. $tableName (`username` VARCHAR(20) NOT NULL , `group_id` INT(20) NOT NULL ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
 
 function create_user_table($connection) {
     $dbname = 'fraguns_datenbankprojekt';
@@ -82,6 +113,204 @@ function create_user_table($connection) {
     `verification_expires` DATETIME NULL DEFAULT NULL,
     PRIMARY KEY (`username`),
     UNIQUE (`email`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+function create_simple_questions_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`simple_questions` (
+    `question_id` INT NOT NULL AUTO_INCREMENT,
+    `group_id` INT NOT NULL ,
+    `creator_username` VARCHAR(32) NOT NULL ,
+    `expiration_date` DATE NOT NULL ,
+    `question_text` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+function create_simple_options_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`simple_options` (
+    `question_id` INT NOT NULL,
+    `option_text` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`, `option_text`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+
+
+function create_multiple_choice_questions_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`multiple_choice_questions` (
+    `question_id` INT NOT NULL AUTO_INCREMENT,
+    `group_id` INT NOT NULL ,
+    `creator_username` VARCHAR(32) NOT NULL ,
+    `expiration_date` DATE NOT NULL ,
+    `question_text` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+function create_multiple_choice_options_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`multiple_choice_options` (
+    `question_id` INT NOT NULL,
+    `option_text` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`, `option_text`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+function create_text_questions_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`text_questions` (
+    `question_id` INT NOT NULL AUTO_INCREMENT,
+    `group_id` INT NOT NULL ,
+    `question_text` VARCHAR(100) NOT NULL ,
+    `creator_username` VARCHAR(32) NOT NULL ,
+    `expiration_date` DATE NOT NULL ,
+    PRIMARY KEY (`question_id`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+function create_ranking_questions_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`ranking_questions` (
+    `question_id` INT NOT NULL AUTO_INCREMENT,
+    `group_id` INT NOT NULL ,
+    `question_text` VARCHAR(100) NOT NULL ,
+    `creator_username` VARCHAR(32) NOT NULL ,
+    `expiration_date` DATE NOT NULL ,
+    PRIMARY KEY (`question_id`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}  
+
+function create_ranking_options_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = " CREATE TABLE `fraguns_datenbankprojekt`.`ranking_options` (
+    `question_id` INT NOT NULL,
+    `option_text` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`, `option_text`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+} 
+
+function create_user_answers_simple_question_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`user_answers_simple_question` (
+    `question_id` INT NOT NULL,
+    `username` VARCHAR(32) NOT NULL ,
+    `group_id` INT NOT NULL ,
+    `answer` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`, `username`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+} 
+
+function create_user_answers_text_question_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`user_answers_text_question` (
+    `question_id` INT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(32) NOT NULL ,
+    `group_id` INT NOT NULL ,
+    `answer` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`, `username`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+} 
+
+function create_user_answers_multiple_choice_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`user_answers_multiple_choice_question` (
+    `question_id` INT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(32) NOT NULL ,
+    `group_id` INT NOT NULL ,
+    `answer` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`, `username`, `answer`)
+    ) ENGINE = InnoDB;";
+    try {
+        $connection->query($sql);
+        return 0;
+    } catch (mysqli_sql_exception $e) {
+        return $e;
+    }
+}
+
+function create_user_answers_ranking_table($connection) {
+    $dbname = 'fraguns_datenbankprojekt';
+
+    $sql = "CREATE TABLE `fraguns_datenbankprojekt`.`user_answers_ranking_question` (
+    `question_id` INT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(32) NOT NULL ,
+    `group_id` INT NOT NULL ,
+    `answer` VARCHAR(100) NOT NULL ,
+    PRIMARY KEY (`question_id`, `username`, `answer`)
     ) ENGINE = InnoDB;";
     try {
         $connection->query($sql);
@@ -116,6 +345,84 @@ function setup_database() {
         return 503;
     }
     $result = create_token_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_group_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_groupmember_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_simple_questions_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_simple_options_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_multiple_choice_questions_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_multiple_choice_options_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_text_questions_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_ranking_questions_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_ranking_options_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_user_answers_simple_question_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_user_answers_text_question_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_user_answers_multiple_choice_table($connection);
+    if ($result instanceof Throwable) {
+        error_log("Error while creating table: " . $result->getMessage());
+        $connection->close();
+        return 503;
+    }
+    $result = create_user_answers_ranking_table($connection);
     if ($result instanceof Throwable) {
         error_log("Error while creating table: " . $result->getMessage());
         $connection->close();
