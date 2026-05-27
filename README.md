@@ -33,5 +33,17 @@ Um zu gewährleisten, dass keine ungültigen Einträge in die Datenbank gelangen
 <img width="532" height="462" alt="image" src="https://github.com/user-attachments/assets/84881b5f-47f5-4b27-8d4b-2a50cf0a8277" />
 Die Verifizierungsseite (verify.php) erhält über die URL per GET den Benutzernamen der Person, welche sich verifizieren möchte. Wenn die Verifizierungsseite über den Link in der E-Mail aufgerufen wurde enthält die URL automatisch den Verifizierungscode, welcher per Javascript automatisch in die entsprechenden Felder gefüllt wird. Falls die Verifizierungsseite über die Registrierungsseite aufgerufen wurde prüft Javascript beim Klick in das erste Ziffernfeld die Zischenablage auf einen sechsstelligen Zahlencode. Falls ein solcher in der Zwischenablage liegt, wird dieser eingefügt. Ansonsten prüft Javascript alle per PASTE eingegeben Daten auf das Format des sechstelligen Zahlencodes und fügt die Daten, falls passend, ein. Gibt der/die Nutzer*in die Ziffern manuell ein, so wird der Fokus nach jeder Ziffer automatisch in das nächste Ziffernfeld gerückt um die Benutzerfreundlichkeit zu maximieren. Beim Klick auf den "Verifizieren"-Button wird Server-seitig geprüft, ob der Verifizierungscode noch gültig ist und falls ja wird der/die Nutzer*in als verifiziert vermerkt. Beim Klick auf den Link "Klicken Sie hier um den Code erneut per E-Mail zu senden." wird, wie zu erwarten, erneut ein Verifizierungscode an die, bei der Registrierung angegebene E-Mail-Adresse gesendet.
 ### Login
-
+Der Login funktionert über ein Token System und die Session Variable in PHP. Beim Login wird ein Cookie mit einem Login-Token gesetzt, welches zur Verifikation des Nutzers dient. Innerhalb einer Session kann der Nutzer auch über die Session Variable verifiziert werden. Falls die Session beendet wird, greift der Login auf den Login-Token im Cookie zu. Hat man sein Passwort vergessen, kann man es über einen ähnlichen Ablauf wie bei der Registrierung die Verifizierung abläuft, zurücksetzen. 
+### Profil
+Jede/r Nutzer*in hat einen Anmeldenamen, welcher für die anderen sichtbar ist, sobald man abstimmt. Der Benutzername dient als Schlüssel und ist einmalig. Anhand des Benutzernamen wird das Profilbild über die Dicebear-API generiert. So kann man die Nutzer*innen leicht visuell auseinanderhalten. Selbstverständlich kann man sein Konto auch löschen. Beim Löschen wird de/die Nutzer*in aus der Datenbank entfernt und bei Abstimmungen wird als Anzeigename nichts mehr angezeigt. Dennoch bleibt gespeichert, für welche Optionen die Person abgestimmt hat.
+### Gruppen
+Bei der Erstellung der Gruppen gibt man die Benutzernamen der zukünftigen Mitglieder der Gruppe an und die Gruppe wird entsprechend erstellt. In jeder Gruppe kann man eigene Fragen stellen. Die Fragen werden immer am folgenden Tag für alle angezeigt. Zudem kann man die Gruppe verlassen, oder als Admin die Gruppe löschen.
+### Fragen
+Es gibt zurzeit drei Fragetypen: Einfachauswahl, Mehrfachauswahl und Textfragen. Bei Einfach- und Mehrfachauswahl kann man die Antwortoptionen selbst einstellen. Bei Textfragen ist eine freie Textantwort möglich. Die Antworten werden nach dem Antworten angezeigt. Dort kann man sehen, was die anderen Gruppenmitglieder abgestimmt haben.
+### 404
+Selbsterklärend. Funktioniert leider nur lokal und nicht auf bplaced, da wir im Free-Plan sind.
+### Diese Seite ist noch in Arbeit
+Diese Meldung wird angezeigt, wenn wir an einer Seite noch arbeiten (wie bei den Rankingfragen).
+## Bei Fragen...
+...FragUns.
 
